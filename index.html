@@ -1,0 +1,394 @@
+
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AI-Syoujyo CharaFile Web Editor</title>
+    <link rel="stylesheet" href="./js/style.min.css">
+	<script type="text/javascript" async="" src="./js/analytics.js"></script><script type="text/javascript" src="./js/vendor.bundle.base.js"></script>
+	<script type="text/javascript" src="./js/msgpack.min.js"></script>
+	<script type="text/javascript" src="./js/binaryReader.min.js"></script>
+	<script type="text/javascript" src="./js/binaryWriter.min.js"></script>
+	<script type="text/javascript" src="./js/AICharaFile.min.js"></script>
+	<script type="text/javascript" src="./js/i18n.js"></script>
+</head>
+<body>
+<script type="text/javascript" src="./js/index.min.js"></script>
+
+    <div class="container-scroller">
+		<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+			<div class="navbar-menu-wrapper d-flex align-items-stretch" style="width: 100%;">
+				<ul class="navbar-nav w-100">
+					<li class="nav-item w-100">
+					  <h3 id="Title">AI-少女 &amp; Honey-Select2 卡牌在线编辑器 v1.1.1</h3>
+					</li>
+				</ul>
+				<ul class="navbar-nav navbar-nav-right">
+					<li class="nav-item" style="width: 94px;">
+						<h5 style="margin-top: .5rem;">Language :</h5>
+					</li>
+					<li class="nav-item" style="width:110px;">
+					  <select class="form-control" id="LangSelect">
+					  <option>简体中文</option><option>繁體中文</option><option>English</option><option>日本語</option></select>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="container-fluid page-body-wrapper">
+			
+			
+			<div class="main-panel">
+			  <div class="content-wrapper">
+			  
+<div class="row user-profile">
+  <div class="col-lg-4 side-left align-items-stretch">
+	<div class="row">
+	  <div class="col-12 grid-margin stretch-card">
+		<div class="card text-center">
+		
+		  <div class="card-body avatar">
+					
+					<h4 class="card-title text-left" id="FileSelectTitle">人物卡牌</h4>
+								<div class="form-control" style="width: 252px;height: 353px;margin: 0 auto;text-align: center;" id="upload_chara_photo">
+						<img alt="" style="margin-top: 0%; margin-left: -6px; width: 105%; height: 100%;" id="chara_image">
+						<span style="display: none;"><h4 id="AI_LoadStatus">加载人物卡牌</h4></span>
+						<input type="file" accept="image/png" style="position: absolute;top: 0px;left: 0px;height: 100%;width: 100%;opacity: 0;" id="chara_image_input" onchange="SelectInputFile()">
+					</div>
+                  </div>
+		</div>
+	  </div>
+	  <div class="col-12 grid-margin stretch-card" id="PluginDepend" style="display: none;">
+		<div class="card">
+		  <div class="card-body overview">
+		  <h4 class="card-title text-left" id="PluginDependTitle">依赖插件</h4>
+			<table class="table table-hover">
+                      <thead>
+                        <tr>
+						  <th id="PluginDependIDColumnTitle">ID</th>
+                          <th id="PluginDependNameColumnTitle">插件名称</th>
+                        </tr>
+                      </thead>
+                      <tbody id="PluginDependList"></tbody>
+                    </table>
+			
+		  </div>
+		</div>
+	  </div>
+	  
+	</div>
+  </div>
+  <div class="col-lg-8 side-right">
+	<div class="card">
+	  <div class="card-body">
+		<ul class="nav nav-tabs tab-basic" role="tablist">
+		  <li class="nav-item">
+			<a class="nav-link active show" id="AI_CharaFile_Title" data-toggle="tab" href="#AI_CharaFile_Tab" role="tab" aria-controls="AI_CharaFile_Tab" aria-selected="true">卡牌信息</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link show" id="AI_CharaExchange_Title" data-toggle="tab" href="#AI_CharaExchange_Tab" role="tab" aria-controls="AI_CharaExchange_Tab" aria-selected="false">修改卡牌封面</a>
+		  </li>
+		</ul>
+					
+		<div class="wrapper">
+		  <div class="tab-content tab-content-basic border-0" id="myTabContent">
+			<div class="tab-pane fade show active" id="AI_CharaFile_Tab" role="tabpanel" aria-labelledby="AI_CharaFile_Title">
+				<h4 class="card-title mb-0" id="AI_CharaFile_Parameter_Title">AI-少女 基础信息</h4>
+				<hr>
+				<div class="form-group row">
+				  <div class="col">
+					  <label for="AI_FullName" id="AI_FullName_Title">人物姓名</label>
+					  <input type="text" class="form-control side-left" id="AI_FullName" placeholder="" value="">
+				  </div>
+				  <div class="col">
+					<label for="AI_BirthMonth" id="AI_BirthMonth_Title">出生月份</label>
+					<select class="form-control" id="AI_BirthMonth"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select>
+				  </div>
+				  <div class="col">
+					<label for="AI_BirthDay" id="AI_BirthDay_Title">出生日期</label>
+					<select class="form-control" id="AI_BirthDay"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option><option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_Sex" id="AI_Sex_Title">性别</label>
+					  <select class="form-control" id="AI_Sex"><option>男性</option><option>女性</option></select>
+				  </div>
+				</div>
+
+				<hr>
+				
+				<div class="form-group row">
+				  <div class="col">
+					  <label for="AI_Personality" id="AI_Personality_Title">人物类型</label>
+					  <select class="form-control" id="AI_Personality"><option>如机械般无感情</option><option>落落大方且温柔</option><option>高意识且自信</option><option>一意孤行且自私</option><option>无精打采且懒散</option><option>积极开朗且乐观</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_HsWish1" id="AI_HsWish_Title1">特性1</label>
+					  <select class="form-control" id="AI_HsWish1"><option>无</option><option>温柔的</option><option>快乐的</option><option>小恶魔</option><option>喜爱刺激</option><option>有礼仪的</option><option>禁断的</option><option>冷静的</option><option>金钱</option><option>知性的</option><option>有信念的</option><option>忠诚的</option><option>有持久力</option><option>可爱</option><option>天真</option><option>不完全</option><option>理解能力</option><option>判断能力</option><option>治愈</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_HsWish2" id="AI_HsWish_Title2">特性2</label>
+					  <select class="form-control" id="AI_HsWish2"><option>无</option><option>温柔的</option><option>快乐的</option><option>小恶魔</option><option>喜爱刺激</option><option>有礼仪的</option><option>禁断的</option><option>冷静的</option><option>金钱</option><option>知性的</option><option>有信念的</option><option>忠诚的</option><option>有持久力</option><option>可爱</option><option>天真</option><option>不完全</option><option>理解能力</option><option>判断能力</option><option>治愈</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_HsWish3" id="AI_HsWish_Title3">特性3</label>
+					  <select class="form-control" id="AI_HsWish3"><option>无</option><option>温柔的</option><option>快乐的</option><option>小恶魔</option><option>喜爱刺激</option><option>有礼仪的</option><option>禁断的</option><option>冷静的</option><option>金钱</option><option>知性的</option><option>有信念的</option><option>忠诚的</option><option>有持久力</option><option>可爱</option><option>天真</option><option>不完全</option><option>理解能力</option><option>判断能力</option><option>治愈</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_Futanari" id="AI_Futanari_Title">扶他</label>
+					  <select class="form-control" id="AI_Futanari"><option>否</option><option>是</option></select>
+				  </div>
+				</div>
+				
+				<hr>
+				
+				<h4 class="card-title mb-0" id="AI_CharaFile_GameInfo_Title">AI-少女 游戏信息</h4>
+				<hr>
+				<div class="form-group row">
+				  <div class="col">
+					  <label for="AI_GameRegistration" id="AI_GameRegistration_Title">登岛状态</label>
+					  <select class="form-control" id="AI_GameRegistration"><option>未登岛</option><option>已登岛</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_Phase" id="AI_Phase_Title">游戏进度(爱心)</label>
+					  <select class="form-control" id="AI_Phase"><option>❤</option><option>❤❤</option><option>❤❤❤</option><option>❤❤❤❤</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_LifeStyle" id="AI_LifeStyle_Title">生活方式</label>
+					  <select class="form-control" id="AI_LifeStyle"><option>无</option><option>【索要者】物欲优先的强欲型。执着于食物，对道具的要求会变多。</option><option>【Baby】喜欢被宠爱的类型。喜欢收到礼物，寂寞的时候就靠近她。</option><option>【Driver】不依赖他人而自己行动的类型。容易进行食物，物品的收集等。</option><option>【Controller】不正视自己的类型。经常休息，睡觉。</option><option>【Excitement Seeker】是即刻有兴趣却容易厌倦的类型。容易移动到别的地方，但厌烦了又会去干别的事情。</option><option>【我行我素】总是我行我素。喜欢享受自己的世界，玩耍，洗澡</option></select>
+				  </div>
+				</div> 
+				
+				<div class="form-group row">
+					<div class="col">
+					  <label for="AI_FlavorState1" id="AI_FlavorState_Title1">女子力 Exp</label>
+					  <input type="text" class="form-control side-left" id="AI_FlavorState1" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="6">
+					</div>
+					<div class="col">
+					  <label for="AI_FlavorState2" id="AI_FlavorState_Title2">信赖 Exp</label>
+					  <input type="text" class="form-control side-left" id="AI_FlavorState2" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="6">
+					</div>
+					<div class="col">
+					  <label for="AI_FlavorState3" id="AI_FlavorState_Title3">人性 Exp</label>
+					  <input type="text" class="form-control side-left" id="AI_FlavorState3" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="6">
+					</div>
+					<div class="col">
+					  <label for="AI_FlavorState4" id="AI_FlavorState_Title4">本能 Exp</label>
+					  <input type="text" class="form-control side-left" id="AI_FlavorState4" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="6">
+					</div>
+					<div class="col">
+					  <label for="AI_FlavorState5" id="AI_FlavorState_Title5">变态 Exp</label>
+					  <input type="text" class="form-control side-left" id="AI_FlavorState5" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="6">
+					</div>
+					<div class="col">
+					  <label for="AI_FlavorState6" id="AI_FlavorState_Title6">警戒 Exp</label>
+					  <input type="text" class="form-control side-left" id="AI_FlavorState6" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="6">
+					</div>
+					<div class="col">
+					  <label for="AI_FlavorState8" id="AI_FlavorState_Title8">社交 Exp</label>
+					  <input type="text" class="form-control side-left" id="AI_FlavorState8" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="6">
+					</div>
+					<div class="col">
+					  <label for="AI_FlavorState7" id="AI_FlavorState_Title7">暗 Exp</label>
+					  <input type="text" class="form-control side-left" id="AI_FlavorState7" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="6">
+					</div>
+				</div> 
+				
+				<div class="form-group row">
+				  <div class="col">
+					  <label for="AI_NormalSkill1" id="AI_NormalSkill_Title1">日常技能1</label>
+					  <select class="form-control" id="AI_NormalSkill1"><option>无</option><option>【厨艺爱好者】会更频繁地制作料理。</option><option>【爱美之心】会更频繁地洗澡。</option><option>【动物之友】能更容易地接触到动物。</option><option>【睡美人】嗜睡。</option><option>【巫女的血统】身体潮湿时不会体温下降、不会轻易黑化。</option><option>【努力就能做到】在行动中得到的成长值要高于平时。</option><option>【意志不坚】情绪易受外界影响。</option><option>【新刺激嗜好】将有更高几率收到女孩的礼物。</option><option>【亲近感】将有更高几率跟随玩家行动。</option><option>【贤妻良母】行动带来的信赖提升值将会更高、干劲上限提高10%。</option><option>【钓友】女孩去钓鱼的几率将会提高。</option><option>【冒失娘】会更频繁地受伤。</option><option>【种地专长】会更频繁地前往田地、农作物的生长速度会有少许提高。</option><option>【贪婪】女孩会更容易迷恋上某些物品。</option><option>【不知疲倦】不会进入疲惫的异常状态、会更频繁地进行探索。</option><option>【大胃王】会更频繁地进餐。</option><option>【喜欢下雨】即便是下雨天也会外出。</option><option>【野性】很少会使用营地的家具。</option><option>【物资收集】会更频繁地用手进行采集。</option><option>【御兽者】会有更高几率捡到猫咪。</option><option>【闷骚色狼】H感情的上升速度将会有少许提高。</option><option>【浮浪子】女孩会更频繁地出去玩。</option><option>【性欲旺盛】女孩发来H邀约的次数将会增加。</option><option>【好奇宝宝】会更容易对H的对话内容产生兴趣。</option><option>【诅咒体质】会时常积累疲劳、与此同时H感情的上升率也会提高、发来H邀约的次数也将增多。</option><option>【神经质】心情变差的阈值将会降低。</option><option>【疑神疑鬼】H对话失败时心情将会变得很差。</option><option>【心灵屏障】会更难接受玩家的建议。</option><option>【身体管理】当疲劳开始积攒、会优先去休息。</option><option>【忍耐】不会陷入空腹状态。</option><option>【容易寂寞】会更频繁地与玩家对话。</option><option>【善于交流】与其他女孩对话时能更容易拉近关系。</option><option>【健谈】会更频繁地与其他女孩对话。</option><option>【行动派】干劲上限提高10%。</option><option>【第六感】被呼叫时即便距离很远也能凭感觉掌握玩家所在的位置。</option><option>【怠惰】会更频繁地偷懒去休息。</option><option>【洁癖】不洗澡时心情将会变差。</option><option>【不幸】捡到等级1道具的几率将会提高。</option><option>【体弱多病】会更容易得感冒。</option><option>【阴暗】与其他女孩对话时、对方会积攒疲劳。</option><option>【勇敢】会更多地前往距离更远的区域。</option><option>【收藏家】会更频繁地捡拾道具。</option><option>【地质专家】会更频繁地使用十字镐挖取道具。</option><option>【毅力】很难陷入高温状态。</option><option>【强运】捡到等级3道具的几率将会提高。</option><option>【马大哈】饮料对其产生的体温调节作用将会减半。</option><option>【幸运】捡到等级2道具的几率将会提高。</option><option>【挖掘爱好者】会更频繁地使用铲子掘取道具。</option><option>【昆虫收藏家】会更频繁地使用虫网捉取昆虫。</option><option>【举一反三】获得道具时习得技能的几率将会提升。</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_NormalSkill2" id="AI_NormalSkill_Title2">日常技能2</label>
+					  <select class="form-control" id="AI_NormalSkill2"><option>无</option><option>【厨艺爱好者】会更频繁地制作料理。</option><option>【爱美之心】会更频繁地洗澡。</option><option>【动物之友】能更容易地接触到动物。</option><option>【睡美人】嗜睡。</option><option>【巫女的血统】身体潮湿时不会体温下降、不会轻易黑化。</option><option>【努力就能做到】在行动中得到的成长值要高于平时。</option><option>【意志不坚】情绪易受外界影响。</option><option>【新刺激嗜好】将有更高几率收到女孩的礼物。</option><option>【亲近感】将有更高几率跟随玩家行动。</option><option>【贤妻良母】行动带来的信赖提升值将会更高、干劲上限提高10%。</option><option>【钓友】女孩去钓鱼的几率将会提高。</option><option>【冒失娘】会更频繁地受伤。</option><option>【种地专长】会更频繁地前往田地、农作物的生长速度会有少许提高。</option><option>【贪婪】女孩会更容易迷恋上某些物品。</option><option>【不知疲倦】不会进入疲惫的异常状态、会更频繁地进行探索。</option><option>【大胃王】会更频繁地进餐。</option><option>【喜欢下雨】即便是下雨天也会外出。</option><option>【野性】很少会使用营地的家具。</option><option>【物资收集】会更频繁地用手进行采集。</option><option>【御兽者】会有更高几率捡到猫咪。</option><option>【闷骚色狼】H感情的上升速度将会有少许提高。</option><option>【浮浪子】女孩会更频繁地出去玩。</option><option>【性欲旺盛】女孩发来H邀约的次数将会增加。</option><option>【好奇宝宝】会更容易对H的对话内容产生兴趣。</option><option>【诅咒体质】会时常积累疲劳、与此同时H感情的上升率也会提高、发来H邀约的次数也将增多。</option><option>【神经质】心情变差的阈值将会降低。</option><option>【疑神疑鬼】H对话失败时心情将会变得很差。</option><option>【心灵屏障】会更难接受玩家的建议。</option><option>【身体管理】当疲劳开始积攒、会优先去休息。</option><option>【忍耐】不会陷入空腹状态。</option><option>【容易寂寞】会更频繁地与玩家对话。</option><option>【善于交流】与其他女孩对话时能更容易拉近关系。</option><option>【健谈】会更频繁地与其他女孩对话。</option><option>【行动派】干劲上限提高10%。</option><option>【第六感】被呼叫时即便距离很远也能凭感觉掌握玩家所在的位置。</option><option>【怠惰】会更频繁地偷懒去休息。</option><option>【洁癖】不洗澡时心情将会变差。</option><option>【不幸】捡到等级1道具的几率将会提高。</option><option>【体弱多病】会更容易得感冒。</option><option>【阴暗】与其他女孩对话时、对方会积攒疲劳。</option><option>【勇敢】会更多地前往距离更远的区域。</option><option>【收藏家】会更频繁地捡拾道具。</option><option>【地质专家】会更频繁地使用十字镐挖取道具。</option><option>【毅力】很难陷入高温状态。</option><option>【强运】捡到等级3道具的几率将会提高。</option><option>【马大哈】饮料对其产生的体温调节作用将会减半。</option><option>【幸运】捡到等级2道具的几率将会提高。</option><option>【挖掘爱好者】会更频繁地使用铲子掘取道具。</option><option>【昆虫收藏家】会更频繁地使用虫网捉取昆虫。</option><option>【举一反三】获得道具时习得技能的几率将会提升。</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_NormalSkill3" id="AI_NormalSkill_Title3">日常技能3</label>
+					  <select class="form-control" id="AI_NormalSkill3"><option>无</option><option>【厨艺爱好者】会更频繁地制作料理。</option><option>【爱美之心】会更频繁地洗澡。</option><option>【动物之友】能更容易地接触到动物。</option><option>【睡美人】嗜睡。</option><option>【巫女的血统】身体潮湿时不会体温下降、不会轻易黑化。</option><option>【努力就能做到】在行动中得到的成长值要高于平时。</option><option>【意志不坚】情绪易受外界影响。</option><option>【新刺激嗜好】将有更高几率收到女孩的礼物。</option><option>【亲近感】将有更高几率跟随玩家行动。</option><option>【贤妻良母】行动带来的信赖提升值将会更高、干劲上限提高10%。</option><option>【钓友】女孩去钓鱼的几率将会提高。</option><option>【冒失娘】会更频繁地受伤。</option><option>【种地专长】会更频繁地前往田地、农作物的生长速度会有少许提高。</option><option>【贪婪】女孩会更容易迷恋上某些物品。</option><option>【不知疲倦】不会进入疲惫的异常状态、会更频繁地进行探索。</option><option>【大胃王】会更频繁地进餐。</option><option>【喜欢下雨】即便是下雨天也会外出。</option><option>【野性】很少会使用营地的家具。</option><option>【物资收集】会更频繁地用手进行采集。</option><option>【御兽者】会有更高几率捡到猫咪。</option><option>【闷骚色狼】H感情的上升速度将会有少许提高。</option><option>【浮浪子】女孩会更频繁地出去玩。</option><option>【性欲旺盛】女孩发来H邀约的次数将会增加。</option><option>【好奇宝宝】会更容易对H的对话内容产生兴趣。</option><option>【诅咒体质】会时常积累疲劳、与此同时H感情的上升率也会提高、发来H邀约的次数也将增多。</option><option>【神经质】心情变差的阈值将会降低。</option><option>【疑神疑鬼】H对话失败时心情将会变得很差。</option><option>【心灵屏障】会更难接受玩家的建议。</option><option>【身体管理】当疲劳开始积攒、会优先去休息。</option><option>【忍耐】不会陷入空腹状态。</option><option>【容易寂寞】会更频繁地与玩家对话。</option><option>【善于交流】与其他女孩对话时能更容易拉近关系。</option><option>【健谈】会更频繁地与其他女孩对话。</option><option>【行动派】干劲上限提高10%。</option><option>【第六感】被呼叫时即便距离很远也能凭感觉掌握玩家所在的位置。</option><option>【怠惰】会更频繁地偷懒去休息。</option><option>【洁癖】不洗澡时心情将会变差。</option><option>【不幸】捡到等级1道具的几率将会提高。</option><option>【体弱多病】会更容易得感冒。</option><option>【阴暗】与其他女孩对话时、对方会积攒疲劳。</option><option>【勇敢】会更多地前往距离更远的区域。</option><option>【收藏家】会更频繁地捡拾道具。</option><option>【地质专家】会更频繁地使用十字镐挖取道具。</option><option>【毅力】很难陷入高温状态。</option><option>【强运】捡到等级3道具的几率将会提高。</option><option>【马大哈】饮料对其产生的体温调节作用将会减半。</option><option>【幸运】捡到等级2道具的几率将会提高。</option><option>【挖掘爱好者】会更频繁地使用铲子掘取道具。</option><option>【昆虫收藏家】会更频繁地使用虫网捉取昆虫。</option><option>【举一反三】获得道具时习得技能的几率将会提升。</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_NormalSkill4" id="AI_NormalSkill_Title4">日常技能4</label>
+					  <select class="form-control" id="AI_NormalSkill4"><option>无</option><option>【厨艺爱好者】会更频繁地制作料理。</option><option>【爱美之心】会更频繁地洗澡。</option><option>【动物之友】能更容易地接触到动物。</option><option>【睡美人】嗜睡。</option><option>【巫女的血统】身体潮湿时不会体温下降、不会轻易黑化。</option><option>【努力就能做到】在行动中得到的成长值要高于平时。</option><option>【意志不坚】情绪易受外界影响。</option><option>【新刺激嗜好】将有更高几率收到女孩的礼物。</option><option>【亲近感】将有更高几率跟随玩家行动。</option><option>【贤妻良母】行动带来的信赖提升值将会更高、干劲上限提高10%。</option><option>【钓友】女孩去钓鱼的几率将会提高。</option><option>【冒失娘】会更频繁地受伤。</option><option>【种地专长】会更频繁地前往田地、农作物的生长速度会有少许提高。</option><option>【贪婪】女孩会更容易迷恋上某些物品。</option><option>【不知疲倦】不会进入疲惫的异常状态、会更频繁地进行探索。</option><option>【大胃王】会更频繁地进餐。</option><option>【喜欢下雨】即便是下雨天也会外出。</option><option>【野性】很少会使用营地的家具。</option><option>【物资收集】会更频繁地用手进行采集。</option><option>【御兽者】会有更高几率捡到猫咪。</option><option>【闷骚色狼】H感情的上升速度将会有少许提高。</option><option>【浮浪子】女孩会更频繁地出去玩。</option><option>【性欲旺盛】女孩发来H邀约的次数将会增加。</option><option>【好奇宝宝】会更容易对H的对话内容产生兴趣。</option><option>【诅咒体质】会时常积累疲劳、与此同时H感情的上升率也会提高、发来H邀约的次数也将增多。</option><option>【神经质】心情变差的阈值将会降低。</option><option>【疑神疑鬼】H对话失败时心情将会变得很差。</option><option>【心灵屏障】会更难接受玩家的建议。</option><option>【身体管理】当疲劳开始积攒、会优先去休息。</option><option>【忍耐】不会陷入空腹状态。</option><option>【容易寂寞】会更频繁地与玩家对话。</option><option>【善于交流】与其他女孩对话时能更容易拉近关系。</option><option>【健谈】会更频繁地与其他女孩对话。</option><option>【行动派】干劲上限提高10%。</option><option>【第六感】被呼叫时即便距离很远也能凭感觉掌握玩家所在的位置。</option><option>【怠惰】会更频繁地偷懒去休息。</option><option>【洁癖】不洗澡时心情将会变差。</option><option>【不幸】捡到等级1道具的几率将会提高。</option><option>【体弱多病】会更容易得感冒。</option><option>【阴暗】与其他女孩对话时、对方会积攒疲劳。</option><option>【勇敢】会更多地前往距离更远的区域。</option><option>【收藏家】会更频繁地捡拾道具。</option><option>【地质专家】会更频繁地使用十字镐挖取道具。</option><option>【毅力】很难陷入高温状态。</option><option>【强运】捡到等级3道具的几率将会提高。</option><option>【马大哈】饮料对其产生的体温调节作用将会减半。</option><option>【幸运】捡到等级2道具的几率将会提高。</option><option>【挖掘爱好者】会更频繁地使用铲子掘取道具。</option><option>【昆虫收藏家】会更频繁地使用虫网捉取昆虫。</option><option>【举一反三】获得道具时习得技能的几率将会提升。</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_NormalSkill5" id="AI_NormalSkill_Title5">日常技能5</label>
+					  <select class="form-control" id="AI_NormalSkill5"><option>无</option><option>【厨艺爱好者】会更频繁地制作料理。</option><option>【爱美之心】会更频繁地洗澡。</option><option>【动物之友】能更容易地接触到动物。</option><option>【睡美人】嗜睡。</option><option>【巫女的血统】身体潮湿时不会体温下降、不会轻易黑化。</option><option>【努力就能做到】在行动中得到的成长值要高于平时。</option><option>【意志不坚】情绪易受外界影响。</option><option>【新刺激嗜好】将有更高几率收到女孩的礼物。</option><option>【亲近感】将有更高几率跟随玩家行动。</option><option>【贤妻良母】行动带来的信赖提升值将会更高、干劲上限提高10%。</option><option>【钓友】女孩去钓鱼的几率将会提高。</option><option>【冒失娘】会更频繁地受伤。</option><option>【种地专长】会更频繁地前往田地、农作物的生长速度会有少许提高。</option><option>【贪婪】女孩会更容易迷恋上某些物品。</option><option>【不知疲倦】不会进入疲惫的异常状态、会更频繁地进行探索。</option><option>【大胃王】会更频繁地进餐。</option><option>【喜欢下雨】即便是下雨天也会外出。</option><option>【野性】很少会使用营地的家具。</option><option>【物资收集】会更频繁地用手进行采集。</option><option>【御兽者】会有更高几率捡到猫咪。</option><option>【闷骚色狼】H感情的上升速度将会有少许提高。</option><option>【浮浪子】女孩会更频繁地出去玩。</option><option>【性欲旺盛】女孩发来H邀约的次数将会增加。</option><option>【好奇宝宝】会更容易对H的对话内容产生兴趣。</option><option>【诅咒体质】会时常积累疲劳、与此同时H感情的上升率也会提高、发来H邀约的次数也将增多。</option><option>【神经质】心情变差的阈值将会降低。</option><option>【疑神疑鬼】H对话失败时心情将会变得很差。</option><option>【心灵屏障】会更难接受玩家的建议。</option><option>【身体管理】当疲劳开始积攒、会优先去休息。</option><option>【忍耐】不会陷入空腹状态。</option><option>【容易寂寞】会更频繁地与玩家对话。</option><option>【善于交流】与其他女孩对话时能更容易拉近关系。</option><option>【健谈】会更频繁地与其他女孩对话。</option><option>【行动派】干劲上限提高10%。</option><option>【第六感】被呼叫时即便距离很远也能凭感觉掌握玩家所在的位置。</option><option>【怠惰】会更频繁地偷懒去休息。</option><option>【洁癖】不洗澡时心情将会变差。</option><option>【不幸】捡到等级1道具的几率将会提高。</option><option>【体弱多病】会更容易得感冒。</option><option>【阴暗】与其他女孩对话时、对方会积攒疲劳。</option><option>【勇敢】会更多地前往距离更远的区域。</option><option>【收藏家】会更频繁地捡拾道具。</option><option>【地质专家】会更频繁地使用十字镐挖取道具。</option><option>【毅力】很难陷入高温状态。</option><option>【强运】捡到等级3道具的几率将会提高。</option><option>【马大哈】饮料对其产生的体温调节作用将会减半。</option><option>【幸运】捡到等级2道具的几率将会提高。</option><option>【挖掘爱好者】会更频繁地使用铲子掘取道具。</option><option>【昆虫收藏家】会更频繁地使用虫网捉取昆虫。</option><option>【举一反三】获得道具时习得技能的几率将会提升。</option></select>
+				  </div>
+				</div> 
+				
+				<div class="form-group row">
+				  <div class="col">
+					  <label for="AI_HSkill1" id="AI_HSkill_Title1">H技能1</label>
+					  <select class="form-control" id="AI_HSkill1"><option>无</option><option>【胸部弱点】在H中的选择胸部系爱抚体位时，少女快感条的上升速度略微提高。</option><option>【名器】在H中选择股间插入系体位时，主人公快感条的上升速度略微提高。</option><option>【浪漫主义者】与少女同时高潮的话，H结束之后少女的信赖略微上升。</option><option>【敏感】少女快感条的上升速度略微提高。</option><option>【喜欢侍奉】在侍奉系的H中主人公高潮一次的话，H结束之后女子力略微上升。</option><option>【喜欢内射】在插入系体位时选择一次中出的话，H结束之后本能略微上升。</option><option>【股间弱点】在H中的选择股间爱抚体位时，少女快感条的上升速度略微提高。</option><option>【喜欢股间】在H中的选择股间系插入体位高潮一次的话，H结束之后信赖略微上升。</option><option>【喜欢外射】在H中的插入系或者侍奉系时选择一次外射的话，H结束之后变态略微上升。</option><option>【M】在H中的强迫系体位被高潮一次的话，H结束之后少女的变态稍微上升。</option><option>【S】在H中的女主导体位使主人公高潮一次的话，H结束之后信赖稍微上升。</option><option>【脸红】好色情绪的初期值上升10%。</option><option>【喜欢同性】在H中的百合系中使对手高潮一次的话，H结束之后社交略微上升。</option><option>【痴女】从少女那发起的H会变成过激的女主动H，主人公将会被袭击。</option><option>【放尿癖】在H中如果放尿的话，H结束之后变态略微上升。</option><option>【菊花弱点】在H中使用菊花爱抚系或者插入菊花的体位时，少女快感条的上升速度略微提高。</option><option>【喜欢爆菊】在H中通过菊花爱抚系或者插入菊花使少女高潮一次的话，H结束之后变态略微上升。</option><option>【讨厌性】好色情绪的初期值减少5%。</option><option>【技巧家】在H中的侍奉系体位时，主人公快感条的上升速度略微提高。</option><option>【喜欢百合】与主人公以外的女子H之后，行动结束后变态略微上升。</option><option>【想被玩坏】H中只要脱力一次，H结束之后，信赖和暗略微上升。</option><option>【不满】H中少女一次都没高潮就结束嘿啾之后，信赖略微下降。</option><option>【色欲魔】好色情绪的初期值上升20%。</option><option>【独善其身】少女在地图中自慰的话，行动结束后本能略微上升。</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_HSkill2" id="AI_HSkill_Title2">H技能2</label>
+					  <select class="form-control" id="AI_HSkill2"><option>无</option><option>【胸部弱点】在H中的选择胸部系爱抚体位时，少女快感条的上升速度略微提高。</option><option>【名器】在H中选择股间插入系体位时，主人公快感条的上升速度略微提高。</option><option>【浪漫主义者】与少女同时高潮的话，H结束之后少女的信赖略微上升。</option><option>【敏感】少女快感条的上升速度略微提高。</option><option>【喜欢侍奉】在侍奉系的H中主人公高潮一次的话，H结束之后女子力略微上升。</option><option>【喜欢内射】在插入系体位时选择一次中出的话，H结束之后本能略微上升。</option><option>【股间弱点】在H中的选择股间爱抚体位时，少女快感条的上升速度略微提高。</option><option>【喜欢股间】在H中的选择股间系插入体位高潮一次的话，H结束之后信赖略微上升。</option><option>【喜欢外射】在H中的插入系或者侍奉系时选择一次外射的话，H结束之后变态略微上升。</option><option>【M】在H中的强迫系体位被高潮一次的话，H结束之后少女的变态稍微上升。</option><option>【S】在H中的女主导体位使主人公高潮一次的话，H结束之后信赖稍微上升。</option><option>【脸红】好色情绪的初期值上升10%。</option><option>【喜欢同性】在H中的百合系中使对手高潮一次的话，H结束之后社交略微上升。</option><option>【痴女】从少女那发起的H会变成过激的女主动H，主人公将会被袭击。</option><option>【放尿癖】在H中如果放尿的话，H结束之后变态略微上升。</option><option>【菊花弱点】在H中使用菊花爱抚系或者插入菊花的体位时，少女快感条的上升速度略微提高。</option><option>【喜欢爆菊】在H中通过菊花爱抚系或者插入菊花使少女高潮一次的话，H结束之后变态略微上升。</option><option>【讨厌性】好色情绪的初期值减少5%。</option><option>【技巧家】在H中的侍奉系体位时，主人公快感条的上升速度略微提高。</option><option>【喜欢百合】与主人公以外的女子H之后，行动结束后变态略微上升。</option><option>【想被玩坏】H中只要脱力一次，H结束之后，信赖和暗略微上升。</option><option>【不满】H中少女一次都没高潮就结束嘿啾之后，信赖略微下降。</option><option>【色欲魔】好色情绪的初期值上升20%。</option><option>【独善其身】少女在地图中自慰的话，行动结束后本能略微上升。</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_HSkill3" id="AI_HSkill_Title3">H技能3</label>
+					  <select class="form-control" id="AI_HSkill3"><option>无</option><option>【胸部弱点】在H中的选择胸部系爱抚体位时，少女快感条的上升速度略微提高。</option><option>【名器】在H中选择股间插入系体位时，主人公快感条的上升速度略微提高。</option><option>【浪漫主义者】与少女同时高潮的话，H结束之后少女的信赖略微上升。</option><option>【敏感】少女快感条的上升速度略微提高。</option><option>【喜欢侍奉】在侍奉系的H中主人公高潮一次的话，H结束之后女子力略微上升。</option><option>【喜欢内射】在插入系体位时选择一次中出的话，H结束之后本能略微上升。</option><option>【股间弱点】在H中的选择股间爱抚体位时，少女快感条的上升速度略微提高。</option><option>【喜欢股间】在H中的选择股间系插入体位高潮一次的话，H结束之后信赖略微上升。</option><option>【喜欢外射】在H中的插入系或者侍奉系时选择一次外射的话，H结束之后变态略微上升。</option><option>【M】在H中的强迫系体位被高潮一次的话，H结束之后少女的变态稍微上升。</option><option>【S】在H中的女主导体位使主人公高潮一次的话，H结束之后信赖稍微上升。</option><option>【脸红】好色情绪的初期值上升10%。</option><option>【喜欢同性】在H中的百合系中使对手高潮一次的话，H结束之后社交略微上升。</option><option>【痴女】从少女那发起的H会变成过激的女主动H，主人公将会被袭击。</option><option>【放尿癖】在H中如果放尿的话，H结束之后变态略微上升。</option><option>【菊花弱点】在H中使用菊花爱抚系或者插入菊花的体位时，少女快感条的上升速度略微提高。</option><option>【喜欢爆菊】在H中通过菊花爱抚系或者插入菊花使少女高潮一次的话，H结束之后变态略微上升。</option><option>【讨厌性】好色情绪的初期值减少5%。</option><option>【技巧家】在H中的侍奉系体位时，主人公快感条的上升速度略微提高。</option><option>【喜欢百合】与主人公以外的女子H之后，行动结束后变态略微上升。</option><option>【想被玩坏】H中只要脱力一次，H结束之后，信赖和暗略微上升。</option><option>【不满】H中少女一次都没高潮就结束嘿啾之后，信赖略微下降。</option><option>【色欲魔】好色情绪的初期值上升20%。</option><option>【独善其身】少女在地图中自慰的话，行动结束后本能略微上升。</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_HSkill4" id="AI_HSkill_Title4">H技能4</label>
+					  <select class="form-control" id="AI_HSkill4"><option>无</option><option>【胸部弱点】在H中的选择胸部系爱抚体位时，少女快感条的上升速度略微提高。</option><option>【名器】在H中选择股间插入系体位时，主人公快感条的上升速度略微提高。</option><option>【浪漫主义者】与少女同时高潮的话，H结束之后少女的信赖略微上升。</option><option>【敏感】少女快感条的上升速度略微提高。</option><option>【喜欢侍奉】在侍奉系的H中主人公高潮一次的话，H结束之后女子力略微上升。</option><option>【喜欢内射】在插入系体位时选择一次中出的话，H结束之后本能略微上升。</option><option>【股间弱点】在H中的选择股间爱抚体位时，少女快感条的上升速度略微提高。</option><option>【喜欢股间】在H中的选择股间系插入体位高潮一次的话，H结束之后信赖略微上升。</option><option>【喜欢外射】在H中的插入系或者侍奉系时选择一次外射的话，H结束之后变态略微上升。</option><option>【M】在H中的强迫系体位被高潮一次的话，H结束之后少女的变态稍微上升。</option><option>【S】在H中的女主导体位使主人公高潮一次的话，H结束之后信赖稍微上升。</option><option>【脸红】好色情绪的初期值上升10%。</option><option>【喜欢同性】在H中的百合系中使对手高潮一次的话，H结束之后社交略微上升。</option><option>【痴女】从少女那发起的H会变成过激的女主动H，主人公将会被袭击。</option><option>【放尿癖】在H中如果放尿的话，H结束之后变态略微上升。</option><option>【菊花弱点】在H中使用菊花爱抚系或者插入菊花的体位时，少女快感条的上升速度略微提高。</option><option>【喜欢爆菊】在H中通过菊花爱抚系或者插入菊花使少女高潮一次的话，H结束之后变态略微上升。</option><option>【讨厌性】好色情绪的初期值减少5%。</option><option>【技巧家】在H中的侍奉系体位时，主人公快感条的上升速度略微提高。</option><option>【喜欢百合】与主人公以外的女子H之后，行动结束后变态略微上升。</option><option>【想被玩坏】H中只要脱力一次，H结束之后，信赖和暗略微上升。</option><option>【不满】H中少女一次都没高潮就结束嘿啾之后，信赖略微下降。</option><option>【色欲魔】好色情绪的初期值上升20%。</option><option>【独善其身】少女在地图中自慰的话，行动结束后本能略微上升。</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="AI_HSkill5" id="AI_HSkill_Title5">H技能5</label>
+					  <select class="form-control" id="AI_HSkill5"><option>无</option><option>【胸部弱点】在H中的选择胸部系爱抚体位时，少女快感条的上升速度略微提高。</option><option>【名器】在H中选择股间插入系体位时，主人公快感条的上升速度略微提高。</option><option>【浪漫主义者】与少女同时高潮的话，H结束之后少女的信赖略微上升。</option><option>【敏感】少女快感条的上升速度略微提高。</option><option>【喜欢侍奉】在侍奉系的H中主人公高潮一次的话，H结束之后女子力略微上升。</option><option>【喜欢内射】在插入系体位时选择一次中出的话，H结束之后本能略微上升。</option><option>【股间弱点】在H中的选择股间爱抚体位时，少女快感条的上升速度略微提高。</option><option>【喜欢股间】在H中的选择股间系插入体位高潮一次的话，H结束之后信赖略微上升。</option><option>【喜欢外射】在H中的插入系或者侍奉系时选择一次外射的话，H结束之后变态略微上升。</option><option>【M】在H中的强迫系体位被高潮一次的话，H结束之后少女的变态稍微上升。</option><option>【S】在H中的女主导体位使主人公高潮一次的话，H结束之后信赖稍微上升。</option><option>【脸红】好色情绪的初期值上升10%。</option><option>【喜欢同性】在H中的百合系中使对手高潮一次的话，H结束之后社交略微上升。</option><option>【痴女】从少女那发起的H会变成过激的女主动H，主人公将会被袭击。</option><option>【放尿癖】在H中如果放尿的话，H结束之后变态略微上升。</option><option>【菊花弱点】在H中使用菊花爱抚系或者插入菊花的体位时，少女快感条的上升速度略微提高。</option><option>【喜欢爆菊】在H中通过菊花爱抚系或者插入菊花使少女高潮一次的话，H结束之后变态略微上升。</option><option>【讨厌性】好色情绪的初期值减少5%。</option><option>【技巧家】在H中的侍奉系体位时，主人公快感条的上升速度略微提高。</option><option>【喜欢百合】与主人公以外的女子H之后，行动结束后变态略微上升。</option><option>【想被玩坏】H中只要脱力一次，H结束之后，信赖和暗略微上升。</option><option>【不满】H中少女一次都没高潮就结束嘿啾之后，信赖略微下降。</option><option>【色欲魔】好色情绪的初期值上升20%。</option><option>【独善其身】少女在地图中自慰的话，行动结束后本能略微上升。</option></select>
+				  </div>
+				  
+				</div> 
+				
+				
+				<hr class="hs2_hide_hr" style="display: none;">
+				
+				<h4 class="card-title mb-0" id="AI_CharaFile_HoneySelect2_Parameter_Title" style="display: none;">Honey Select2 基础信息</h4>
+				
+				<hr class="hs2_hide_hr" style="display: none;">
+				
+				<div class="form-group row" id="AI_CharaFile_HoneySelect2_Parameter" style="display: none;">
+				  <div class="col">
+					  <label for="HS2_Personality" id="HS2_Personality_Title">人物性格</label>
+					  <select class="form-control" id="HS2_Personality"><option>安静</option><option>普通</option><option>勤劳</option><option>女友感</option><option>时髦</option><option>胆小</option><option>母性</option><option>S</option><option>开朗</option><option>天然</option><option>小心翼翼</option><option>大和抚子</option><option>天真阳光</option><option>中二骄傲</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="HS2_Trait" id="HS2_Trait_Title">人物特性</label>
+					  <select class="form-control" id="HS2_Trait"><option>无</option><option>綺麗好き</option><option>ものぐさ</option><option>虚弱</option><option>タフネス</option><option>頻尿</option><option>我慢強い</option><option>グラスハート</option><option>不屈の精神</option><option>欲求不満</option><option>自制心</option><option>思うがまま</option><option>感受性豊か</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="HS2_Mind" id="HS2_Mind_Title">人物心情</label>
+					  <select class="form-control" id="HS2_Mind"><option>无</option><option>気になる</option><option>好きかも</option><option>一目惚れ</option><option>話づらい</option><option>苦手</option><option>嫌い</option><option>指示されたい</option><option>命令されたい</option><option>逆らえない</option><option>楽しい</option><option>苛めたい</option><option>服従させたい</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="HS2_hAttribute" id="HS2_hAttribute_Title">H属性</label>
+					  <select class="form-control" id="HS2_hAttribute"><option>无</option><option>性欲旺盛</option><option>S</option><option>M</option><option>胸が敏感</option><option>お尻が敏感</option><option>股間が敏感</option><option>キスに弱い</option><option>潔癖症</option><option>Hに抵抗がある</option><option>寂しがり屋</option></select>
+				  </div>
+				</div>
+				
+				<hr class="hs2_hide_hr" style="display: none;">
+				
+				<h4 class="card-title mb-0" id="AI_CharaFile_HoneySelect2_GameInfo_Title" style="display: none;">Honey Select2 游戏信息</h4>
+				
+				<hr class="hs2_hide_hr" style="display: none;">
+				
+				<div class="form-group row" id="AI_CharaFile_HoneySelect2_GameInfo1" style="display: none;">
+				  <div class="col">
+					  <label for="HS2_Favor" id="HS2_Favor_Title">宠爱</label>
+					  <input type="text" class="form-control side-left" id="HS2_Favor" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div>
+				  <div class="col">
+					  <label for="HS2_Enjoyment" id="HS2_Enjoyment_Title">享受</label>
+					   <input type="text" class="form-control side-left" id="HS2_Enjoyment" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div>
+				  <div class="col">
+					  <label for="HS2_Aversion" id="HS2_Aversion_Title">厌恶</label>
+					   <input type="text" class="form-control side-left" id="HS2_Aversion" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div>
+				  <div class="col">
+					  <label for="HS2_Slavery" id="HS2_Slavery_Title">服从</label>
+					   <input type="text" class="form-control side-left" id="HS2_Slavery" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div>
+				  <div class="col">
+					  <label for="HS2_Broken" id="HS2_Broken_Title">崩坏</label>
+					   <input type="text" class="form-control side-left" id="HS2_Broken" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div>
+				  <div class="col">
+					  <label for="HS2_Dependence" id="HS2_Dependence_Title">依赖</label>
+					   <input type="text" class="form-control side-left" id="HS2_Dependence" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div>
+				</div>
+				
+				<div class="form-group row" id="AI_CharaFile_HoneySelect2_GameInfo2" style="display: none;">
+				  <div class="col">
+					  <label for="HS2_HCount" id="HS2_HCount_Title">战斗次数</label>
+					   <input type="text" class="form-control side-left" id="HS2_HCount" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div>
+				  <div class="col">
+					  <label for="HS2_Dirty" id="HS2_Dirty_Title">清洁度</label>
+					   <input type="text" class="form-control side-left" id="HS2_Dirty" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div>
+				  <div class="col">
+					  <label for="HS2_Tiredness" id="HS2_Tiredness_Title">疲劳度</label>
+					   <input type="text" class="form-control side-left" id="HS2_Tiredness" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div> 
+				  <div class="col">
+					  <label for="HS2_Toilet" id="HS2_Toilet_Title">厕意度</label>
+					   <input type="text" class="form-control side-left" id="HS2_Toilet" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div> 
+				  <div class="col">
+					  <label for="HS2_Libido" id="HS2_Libido_Title">性欲度</label>
+					   <input type="text" class="form-control side-left" id="HS2_Libido" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div> 
+				  <div class="col">
+					  <label for="HS2_Alertness" id="HS2_Alertness_Title">警觉度</label>
+					   <input type="text" class="form-control side-left" id="HS2_Alertness" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div> 
+				</div>
+				
+				<div class="form-group row" id="AI_CharaFile_HoneySelect2_GameInfo3" style="display: none;">
+				  <div class="col">
+					  <label for="HS2_FirstHFlag" id="HS2_FirstHFlag_Title">处女</label>
+					  <select class="form-control" id="HS2_FirstHFlag"><option>否</option><option>是</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="HS2_LockBroken" id="HS2_LockBroken_Title">锁定 崩坏数值</label>
+					  <select class="form-control" id="HS2_LockBroken"><option>未锁定</option><option>锁定</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="HS2_LockDependence" id="HS2_LockDependence_Title">锁定 依赖数值</label>
+					  <select class="form-control" id="HS2_LockDependence"><option>未锁定</option><option>锁定</option></select>
+				  </div>
+				  <div class="col">
+					  <label for="HS2_ResistH" id="HS2_ResistH_Title">H抵抗度</label>
+					   <input type="text" class="form-control side-left" id="HS2_ResistH" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div> 
+				  <div class="col">
+					  <label for="HS2_ResistPain" id="HS2_ResistPain_Title">疼痛抵抗度</label>
+					   <input type="text" class="form-control side-left" id="HS2_ResistPain" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div> 
+				  <div class="col">
+					  <label for="HS2_ResistAnal" id="HS2_ResistAnal_Title">菊花抵抗度</label>
+					   <input type="text" class="form-control side-left" id="HS2_ResistAnal" placeholder="" value="0" oninput="this.value=this.value.replace(/[^\d.]/g,'')" maxlength="3">
+				  </div> 
+				</div>
+				
+				<hr>
+				
+				<div class="form-group row">
+					<div class="col">
+						<input class="btn btn-primary" id="AICharaFileCoordinateSave" value="提取并导出服装卡" type="submit">
+					</div>
+					<div class="col text-right">
+						<input class="btn btn-success" id="AICharaFileSave" value="保存修改" type="submit">
+					</div>
+				</div>
+			
+			</div>
+			
+			
+			<div class="tab-pane fade" id="AI_CharaExchange_Tab" role="tabpanel" aria-labelledby="AI_CharaExchange_Title">
+				<h4 class="card-title mb-0" id="AI_CharaFile_NewPng_Title">选择新的封面图片</h4>
+				<hr>
+				
+				<div class="form-group row">
+					<div class="form-control" style="width: 100%;height: 353px;margin: 0 auto;text-align: center;" id="upload_chara_new_image">
+						<img alt="" style="margin-top: 135px !important;" id="chara_new_image">
+						<span ><h4 id="AI_NewImage_LoadStatus">加载新的人物卡牌封面图片</h4></span>
+						<input type="file" accept="image/png" style="position: absolute;top: 180px;left: 0px;height: 353px;width: 100%;opacity: 0;" id="chara_new_image_input" onchange="SelectNewImageFile()">
+					</div>
+				</div>
+				<hr>
+				
+				<div class="form-group row">
+					<div class="col text-right">
+						<input class="btn btn-success" id="AICharaFileCombineSave" value="保存修改" type="submit">
+					</div>
+				</div>
+			</div>
+			
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
