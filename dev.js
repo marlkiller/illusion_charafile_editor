@@ -1,3 +1,6 @@
+SelectInputFile();
+
+
 this.br = new binaryReader(b);
 this.HasKKEx = !1;
 this.PngSize = -1;
