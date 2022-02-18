@@ -35,7 +35,7 @@ function parse (){
     this.PngSize = B(this.br);
     this.br.seekFromBeginning(this.PngSize);
 
-    this.LoadProductNo = this.br.readInt32_LE(); // 1位 | 64 | 100
+    this.LoadProductNo = this.br.readInt32_LE(); // 32bit | 64 | 100
 
     this.LoadCharaType = this.br.readUtf8String(); // "【AIS_Chara】"
     this.LoadVersion = this.br.readUtf8String(); // "1.0.0"
@@ -70,5 +70,26 @@ readUint8: function () {
     var a;
     a = this.data[this.position];
     this.position += 1;
+    return a
+}
+
+readBytes: function (a) {
+    if (this.data.length < this.position + a) throw "range error";
+    for (var c = new Uint8Array(a), b = 0; b < a; b++) c[b] = this.data[this.position + b];
+    this.position += a;
+    return c
+}
+
+readInt32_LE: function () {
+    var a = this.readUint32_LE();
+    a & 2147483648 && (a = -(a - 1 ^ 4294967295));
+    return a
+}
+
+readUint32_LE: function () {
+    if (this.data.length < this.position + 4) throw "range error";
+    var a = this.data[this.position] + (this.data[this.position + 1] << 8) + (this.data[this.position +
+        2] << 16) + (this.data[this.position + 3] << 24);
+    this.position += 4;
     return a
 }
