@@ -50,8 +50,12 @@ function parse (){
             })
         },
     d = this.br.readBytes(this.br.readInt32_LE()); // this.br.readInt32_LE() = 225
-    this.AIChara_BlockHeader = msgpack.decode(d, b);
+    this.AIChara_BlockHeader = msgpack.decode(d, b); // 81...27 | 129...39 | ..lstInfo...size..'
     console.log("AICharaFile BlockHeader:\n", this.AIChara_BlockHeader);
+//    0: {"name" => "Custom"}
+//    1: {"version" => "0.0.0"}
+//    2: {"pos" => 0}
+//    3: {"size" => 4530}
 
 }
 
