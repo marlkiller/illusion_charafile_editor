@@ -35,6 +35,7 @@ function parse (){
     this.PngSize = B(this.br);
     this.br.seekFromBeginning(this.PngSize);
 
+    // 32bit = 4byte , 1byte = 8bit
     this.LoadProductNo = this.br.readInt32_LE(); // 32bit | 64 | 100
 
     this.LoadCharaType = this.br.readUtf8String(); // "【AIS_Chara】"
